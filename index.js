@@ -25,6 +25,13 @@ app.get("/html", (request, response) => {
     `;
   response.send(page);
 });
+app.get('/json', (request, response) => {
+    let someObject = {
+        name: "Tim",
+        isCool: true
+    }
+    response.json(someObject);
+});
 // POST route on localhost:3000/mirror
 // with JSON body content containing a "message" variable
 app.post("/mirror", (request, response) => {
