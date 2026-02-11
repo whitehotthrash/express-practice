@@ -1,12 +1,14 @@
 // Import the ExpressJS package
 const express = require("express");
+// create express router
+const router = express.Router();
 // Create an instance of Express
 const app = express();
 // Set up any data needed to give to the server later
 const port = 3000;
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+//app.use(express.json());
+//app.use(express.urlencoded({ extended: true }));
 
 function messageWithVerb(request, response) {
   response.send(`Received a request with the ${request.method} HTTP verb!`);
@@ -15,7 +17,7 @@ function messageWithVerb(request, response) {
 // Tell the server:
 // - configure the server instance to respond to an additional route
 // - the route will be a HTTP GET request on the homepage of the server (eg. localhost:3000/ )
-app.get("/html", (request, response) => {
+router.get("/html", (request, response) => {
   let page = `
     <body style="padding: 0,0,0,0; width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: beige;">
       <h1>Homepage</h1>
@@ -25,7 +27,7 @@ app.get("/html", (request, response) => {
     `;
   response.send(page);
 });
-app.get('/json', (request, response) => {
+router.get('/json', (request, response) => {
     let someObject = {
         name: "Tim",
         isCool: true
@@ -34,7 +36,7 @@ app.get('/json', (request, response) => {
 });
 // POST route on localhost:3000/mirror
 // with JSON body content containing a "message" variable
-app.post("/mirror", (request, response) => {
+router.post("/mirror", (request, response) => {
   // Any submitted JSON keys will be on "body"
   // Access them with object syntax:
   let message = request.body.message;
@@ -52,13 +54,21 @@ app.post("/mirror", (request, response) => {
 // app.patch('/', messageWithVerb(request, response));
 // app.delete('/', messageWithVerb(request, response));
 
-// Immediately-invoked callback style
-app.get("/", (request, response) => {
-  response.send("Hello world!");
+// // Immediately-invoked callback style
+// app.get("/", (request, response) => {
+//   response.send("Hello world!");
+// });
+
+// Configure routes attached to the router instance
+router.get('/namedRoute', (request, response) => {
+    response.send("This is from a named route! Tada!");
 });
 
+// Export the router so that other files can use it:
+module.exports = router;
+
 // Once the server has been configured, tell it to start listening to web traffic.
-app.listen(port, () => {
-  // This logged message will appear in the terminal, not the browser.
-  console.log(`Example app listening on port ${port}`);
-});
+// app.listen(port, () => {
+//   // This logged message will appear in the terminal, not the browser.
+//   console.log(`Example app listening on port ${port}`);
+// });
