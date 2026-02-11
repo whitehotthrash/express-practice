@@ -8,6 +8,10 @@ const port = 3000;
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
+function messageWithVerb(request, response) {
+    response.send(`Received a request with the ${request.method} HTTP verb!`);
+}
+
 // Tell the server:
 // - configure the server instance to respond to an additional route
 // - the route will be a HTTP GET request on the homepage of the server (eg. localhost:3000/ ) 
@@ -16,12 +20,6 @@ app.get('/', (request, response) => {
     // In this case, we tell the response to send a message in HTML to the client.
     response.send('Hello World!');
 });
-
-function messageWithVerb(request, response) {
-    response.send(`Received a request with the ${request.method} HTTP verb!`);
-}
-
-app.get('/', messageWithVerb(request, response));
 // POST route on localhost:3000/mirror
 // with JSON body content containing a "message" variable
 app.post('/mirror', (request, response) => {
@@ -38,9 +36,9 @@ app.post('/mirror', (request, response) => {
         egassem: message
     });
 });
-app.put('/', messageWithVerb(request, response));
-app.patch('/', messageWithVerb(request, response));
-app.delete('/', messageWithVerb(request, response));
+// app.put('/', messageWithVerb(request, response));
+// app.patch('/', messageWithVerb(request, response));
+// app.delete('/', messageWithVerb(request, response));
 
 // Immediately-invoked callback style
 app.get('/', (request, response) => {
