@@ -7,6 +7,8 @@ const app = express();
 // Set up any data needed to give to the server later
 const port = 3000;
 
+
+// figure this out
 //app.use(express.json());
 //app.use(express.urlencoded({ extended: true }));
 
